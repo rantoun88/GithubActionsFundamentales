@@ -1,12 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: GitHub Actions Demo
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
+    paths-ignore: [.github/**]
   pull_request:
     branches: [ "main" ]
 
@@ -23,14 +24,16 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
+      - run: |
+          echo "🎉 The job was triggered by event: ${{ github.event_name }}"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
+      - uses: actions/checkout@v3.3.0
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: List files in the repository
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo "The repository ${{ github.repository }} contains the following files:"
+          tree
