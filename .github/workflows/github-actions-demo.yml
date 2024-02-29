@@ -22,9 +22,22 @@ on:
         required: true
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🎉 The job was triggered by event: ${{ github.event_name }}"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
+
+      - uses: actions/checkout@v3.3.0
+
+      - name: List files in the repository
+        run: |
+          echo "The repository ${{ github.repository }} contains the following files:"
+          tree
   # This workflow contains a single job called "build"
   Test:
-    # The type of runner that the job will run on
+     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
     needs: Build
